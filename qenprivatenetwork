@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &enableprivateNET);
+
+#SYNTAX
+#/usr/local/sbin/qenprivatenetwork '$cust_name' '$cust_id' '$server_id' '$vlan_id' '$lan_mac_address' '$kvm_host_ips'
+#EXAMPLE
+#/usr/local/sbin/qenprivatenetwork 'mayar' 'vm01' 'vm01-img001' '28' '10:00:00:00:00:00' ''
+
+################
+##Main
+##
+#################
+
+my $cust_name=shift;
+my $cust_id=shift;
+my $server_id=shift;
+my $vlan_id=shift;
+my $lan_mac_address=shift;
+my $kvm_host_ips=shift;
+my $lan_host_ip=shift;
+my $os_name=shift;
+
+if (enableprivateNET($cust_name,$cust_id,$server_id,$vlan_id,$lan_mac_address,$kvm_host_ips,$lan_host_ip,$os_name))
+ {
+	write_log("PRIVATE NETWORK ENABLED for $cust_name \n");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE ENABLING PRIVATE NETWORK\n");
+        print fail;
+        }

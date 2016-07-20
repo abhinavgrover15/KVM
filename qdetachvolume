@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &detachVolume);
+
+#SYNTAX  qdetachvolume <cust_id> <server_id> <volume_name> 
+#EXAMPLE qdetachvolume mayar testvm01 vda  
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+my $volume_name=shift;
+
+
+
+#####################################################################################################################
+if (detachVolume ($cust_id,$server_id,$volume_name))
+ {
+        write_log("$volume_name is detached successfully from $cust_id-$server_id \n");
+	print success;
+        }
+else
+        {
+        write_log("ERROR IN DETACHING $volume_name \n");
+	print fail;
+        }

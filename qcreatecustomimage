@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &createcustomIMAGE);
+
+#SYNTAX
+#/usr/local/sbin/qcreatecustomimage '<cust_id>' '<server_id>' '<custom_img_id>' '<custom_img_location>'
+#EXAMPLE
+#/usr/local/sbin/qcreatecustomimage 'mayar' 'vm01' 'vm01-img001' '/customer_custom_images/mayar/vm01-img001'
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+my $custom_img_id=shift;
+my $custom_img_location=shift;
+
+
+if (createcustomIMAGE($cust_id,$server_id,$custom_img_id,$custom_img_location))
+ {
+	write_log("CUSTOM IMAGE $custom_img_id  HAS BEEN CREATED FOR $server_id, CUSTOMER NAME $cust_id AT PATH LOCATION $custom_img_location \n");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE CREATING CUSTOM IMAGE $custom_img_id FOR $server_id, CUSTOMER NAME \n");
+        print fail;
+        }

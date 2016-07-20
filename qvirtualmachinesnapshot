@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &vmSNAPSHOT);
+
+
+################
+##Main
+##
+#################
+# COMMAND USAGE #
+#qvmsnapshot mayar testvm01 
+my $client_name=shift;
+my $server_id=shift;
+
+
+#####################################################################################################################
+if (vmSNAPSHOT ($client_name,$server_id))
+ {
+	write_log("SNAPSHOT HAS BEEN TAKEN  FOR MACHINE : $server_id AND CUSTOMER ID :  $client_name \n");
+ }
+else
+ {
+	write_log("SNAPSHOT HAS NOT BEEN TAKEN SUCCESSFULLY FOR MACHINE : $server_id AND CUSTOMER ID :  $client_name \n");
+ }

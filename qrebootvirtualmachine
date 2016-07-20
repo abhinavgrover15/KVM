@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &rebootVM);
+
+#SYNTAX
+#/usr/local/sbin/qrebootvirtualserver  '<cust_id>' '<server_id>'
+#EXAMPLE
+#/usr/local/sbin/qrebootvirtualserver mayar SRV-01
+
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+
+if (rebootVM($cust_id,$server_id))
+ {
+	write_log("SERVER : $server_id HAS BEEN REBOOTED FOR CUSTOMER : $cust_id");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE REBOOTING SERVER : $server_id FOR CUSTOMER : $cust_id");
+        print fail;
+        }

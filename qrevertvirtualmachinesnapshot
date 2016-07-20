@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &vmREVERTSS);
+
+
+################
+##Main
+##
+#################
+# COMMAND USAGE #
+
+#qvmrevertss mayar testvm01 1387299132
+my $client_name=shift;
+my $server_id=shift;
+my $snapshotid=shift;
+
+#####################################################################################################################
+if (vmREVERTSS ($client_name,$server_id,$snapshotid))
+ {
+	write_log("SNAPSHOT ID : $snapshotid  HAS BEEN REVERTED  FOR MACHINE : $server_id AND CUSTOMER ID :  $client_name \n");
+ }
+else
+ {
+	write_log("SNAPSHOT ID : $snapshotid HAS NOT BEEN REVERTED FOR MACHINE : $server_id AND CUSTOMER ID :  $client_name \n");
+ }

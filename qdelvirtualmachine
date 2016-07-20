@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &delVIRTUALMACHINE);
+
+#SYNTAX  qdelvirtualmachine <cust_id> <mac_name>
+#EXAMPLE qdelvirtualmachine mayar testvm01
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+
+
+#####################################################################################################################
+if (delVIRTUALMACHINE ($cust_id,$server_id))
+ {
+        write_log("$cust_id-$server_id IS DELETED SUCCESSFULLY \n");
+	print success;
+        }
+else
+        {
+        write_log("$cust_id-$server_id ERROR IN DELETION \n");
+	print fail;
+        }

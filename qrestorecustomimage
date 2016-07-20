@@ -1,0 +1,34 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &restorecustomIMAGE);
+
+#SYNTAX
+#/usr/local/sbin/qrestorecustomimage '<cust_id>' '<server_id>' '<custom_img_id>' '<custom_img_location>' '<$os_type>' '<$os_name>' '<$wan_primary_ip>' '<$wan_sec_ip_list>'
+#EXAMPLE
+#/usr/local/sbin/qrestorecustomimage 'mayar' 'vm01' 'vm01-img001' '/customer_custom_images/mayar/vm01-img001' 'linux' 'debian' '162.222.32.124' '162.222.32.126,162.222.32.130'
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+my $custom_img_id=shift;
+my $custom_img_location=shift;
+my $os_type=shift;
+my $os_name=shift;
+my $wan_primary_ip=shift;
+my $wan_sec_ip_list=shift;
+
+if (restorecustomIMAGE($cust_id,$server_id,$custom_img_id,$custom_img_location,$os_type,$os_name,$wan_primary_ip,$wan_sec_ip_list))
+ {
+	write_log("CUSTOM IMAGE $custom_img_id  HAS BEEN RESTORED FOR $server_id, CUSTOMER NAME $cust_id FROM PATH LOCATION $custom_img_location \n");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE RESTORING CUSTOM IMAGE $custom_img_id FOR $server_id, CUSTOMER NAME \n");
+        print fail;
+        }

@@ -1,0 +1,48 @@
+#!/usr/bin/perl
+
+use strict;
+use warning;
+
+################
+
+my $cust_id=shift;
+my $server_id=shift;
+my $cust_name=shift;
+my $os_type=shift;
+my $os_name=shift;
+my $os_version=shift;
+my $os_arch=shift;
+my $os_image_location=shift;
+my $host_name=shift;
+my $ram=shift;
+my $vcpu=shift;
+my $storage=shift;
+my $admin_password=shift;
+my $wan_mac_address=shift;
+my $wan_primary_ip=shift;
+my $wan_sec_ip_list=shift;
+my $vm_host_vnc_port=shift;
+my $vnc_password=shift;
+
+
+
+985  virt-install --connect qemu:///system --name cloudinit-test10 --ram 2048 --vcpus 2 --disk /var/lib/libvirt/images/cloudinit-test10.qcow2,format=qcow2 --graphics vnc,password=arcand00,port=5982,listen=162.222.32.102 --cdrom /var/lib/libvirt/images/cloudinit-test10.iso --network network:phybrid,mac=00:0A:00:04:05:10
+ 1986  cat /iso/cloudinit/user-data
+ 1987  vim /iso/cloudinit/user-data
+ 1988  genisoimage -o /var/lib/libvirt/images/cloudinit-test11.iso  -V cidata -r -J /iso/cloudinit/meta-data /iso/cloudinit/user-data
+ 1989  cp -rp /tmp/trusty-server-cloudimg-amd64-disk1.img /var/lib/libvirt/images/cloudinit-test11.qcow2
+ 1990  virt-install --connect qemu:///system --name cloudinit-test11 --ram 2048 --vcpus 2 --disk /var/lib/libvirt/images/cloudinit-test11.qcow2,format=qcow2 --graphics vnc,password=arcand00,port=5981,listen=162.222.32.102 --cdrom /var/lib/libvirt/images/cloudinit-test11.iso --network network:phybrid,mac=00:0A:00:04:05:10
+ 1991  virt-install --connect qemu:///system --name cloudinit-test11 --ram 2048 --vcpus 2 --disk /var/lib/libvirt/images/cloudinit-test11.qcow2,format=qcow2 --graphics vnc,password=arcand00,port=5981,listen=162.222.32.102 --cdrom /var/lib/libvirt/images/cloudinit-test11.iso --network network:phybrid,mac=00:0A:00:04:05:11
+ 1992  vim /iso/cloudinit/user-data
+ 1993  cat /iso/cloudinit/user-data
+ 1994  vi /iso/cloudinit/user-data
+ 1995  genisoimage -o /var/lib/libvirt/images/cloudinit-test12.iso  -V cidata -r -J /iso/cloudinit/meta-data /iso/cloudinit/user-data
+ 1996  cp -rp /tmp/trusty-server-cloudimg-amd64-disk1.img /var/lib/libvirt/images/cloudinit-test12.qcow2
+ 1997  virt-install --connect qemu:///system --name cloudinit-test12 --ram 2048 --vcpus 2 --disk /var/lib/libvirt/images/cloudinit-test12.qcow2,format=qcow2 --graphics vnc,password=arcand00,port=5980,listen=162.222.32.102 --cdrom /var/lib/libvirt/images/cloudinit-test12.iso --network network:phybrid,mac=00:0A:00:04:05:12
+ 1998  cd /usr/local/sbin/
+ 1999  ls
+ 2000  cp -rp qaddvirtualmachine  qaddvmcloudinit
+ 2001  vim qaddvmcloudinit
+
+virt-install --connect qemu:///system --name $cust_id-$server_id --ram $ram --vcpus $vcpu --disk /var/lib/libvirt/images/$cust_id-$server_id.qcow2,format=qcow2 --graphics vnc,password=$vnc_password,port=$vm_host_vnc_port,listen=$host_ip_address --cdrom $iso_path --network network:phybrid,mac=$wan_mac_address >>/tmp/log 2>>/tmp/log");
+

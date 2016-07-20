@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &disprivNETWORK);
+
+#SYNTAX
+#/usr/local/sbin/qdisprivatenetwork '$cust_name' '$cust_id' '$server_id'  '$lan_mac_address' 
+#EXAMPLE
+#/usr/local/sbin/qdisprivatenetwork 'mayar' 'vm01' 'vm01-img001'  '10:00:00:00:00:00' 
+
+################
+##Main
+##
+#################
+
+my $cust_name=shift;
+my $cust_id=shift;
+my $server_id=shift;
+my $lan_mac_address=shift;
+
+
+if (disprivNETWORK($cust_name,$cust_id,$server_id,$lan_mac_address))
+ {
+	write_log("PRIVATE NETWORK DISABLED for $cust_name \n");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE DISABLING PRIVATE NETWORK\n");
+        print fail;
+        }

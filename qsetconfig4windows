@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM1 qw(&write_log &success  &fail &vmSETCONFIG4WINDOWS);
+
+#SYNTAX
+#/usr/local/sbin/qsetconfig4windows '<cust_id>' '<mac_name>' '<hostname>' '<ipaddr>' '<passwd>'
+#EXAMPLE
+#/usr/local/sbin/qsetconfig4windows mayar window-2008-64 SERVER-2K8-01 192.168.1.10 pa$$w0rd#
+
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $mac_name=shift;
+my $hostname=shift;
+my $ipaddr=shift;
+my $passd=shift;
+
+print $cust_id;
+print $mac_name;
+
+
+if (vmSETCONFIG4WINDOWS($cust_id,$mac_name,$hostname,$ipaddr,$passwd))
+ {
+        write_log("PASSWORD :  $passd & HOSTNAME : $hostname IS CONFIGURED AT MACHINE : $mac_name WITH IPADDRESS : $ipaddr FOR CUSTOMER :$cust_id");
+        print success;
+        }
+else
+        {
+        write_log("Error in Installation::");
+        print fail;
+        }

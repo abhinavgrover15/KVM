@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &sshkeygenerate);
+
+#SYNTAX
+#/usr/local/sbin/qsshkey '<cust_id>' '<server_id>' '<cust_name>' '<sshkey_id>' '<sshkey_name>' '<sshkey_value>'
+#EXAMPLE
+#/usr/local/sbin/qsshkey 'mayar' 'vm01' 'My Org'  '001' 'My Key' 'ssh_rsa.pub.value'
+
+################
+##Main
+##
+#################
+
+my $cust_id=shift;
+my $server_id=shift;
+my $cust_name=shift;
+my $sshkey_id=shift;
+my $sshkey_name=shift;
+my $sshkey_value=shift;
+
+if (sshkeygenerate($cust_id,$server_id,$sshkey_value))
+ {
+	#write_log("SSH KEY ID: $sshkey_id, KEY NAME: $sshkey_name IS ADDED FOR HOST: $server_id AND CUSTOMER: $cust_id \n");
+        print success;
+        }
+else
+        {
+	write_log("ERROR SSH KEY ID: $sshkey_id, KEY NAME: $sshkey_name IS ADDED FOR HOST: $server_id AND CUSTOMER: $cust_id \n");
+        print fail;
+        }

@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &delBACKUP);
+
+#SYNTAX
+#/usr/local/sbin/qdelbackup '<cust_id>' '<server_id>' '<retention_days>' '<bkp_img_id>' '<bkp_img_location>'
+#EXAMPLE
+#/usr/local/sbin/qdelbackup 'mayar' 'vm01' '30'  'bkp-001' 'nfs1'
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+my $retention_days=shift;
+my $bkp_img_id=shift;
+my $bkp_img_location=shift;
+
+
+if (delBACKUP($cust_id,$server_id,$retention_days,$bkp_img_id,$bkp_img_location))
+ {
+	write_log("BACKUP IMAGE $bkp_img_id  HAS BEEN DELETED FOR $server_id, CUSTOMER NAME $cust_id AT PATH LOCATION $bkp_img_location \n");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE DELETING BACKUP IMAGE $bkp_img_id FOR $server_id, CUSTOMER NAME $cust_id AT PATH LOCATION $bkp_img_location \n");
+        print fail;
+        }

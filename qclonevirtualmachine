@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &vmCLONE);
+
+
+################
+##Main
+##
+#################
+# COMMAND USAGE #
+#qclonevirtualmachine mayar testvm01 testvm01clone
+my $client_name=shift;
+my $server_id=shift;
+my $clone_vmname=shift;
+
+#####################################################################################################################
+if (vmCLONE ($client_name,$server_id,$clone_vmname))
+ {
+	write_log("VIRTUAL MACHINE HAS BEEN CLONED : $clone_vmname FOR MACHINE : $server_id AND CUSTOMER ID :  $client_name \n");
+ }
+else
+ {
+	write_log("ERROR WHILE CLONING : $clone_vmname FOR MACHINE : $server_id AND CUSTOMER ID :  $client_name  \n");
+ }

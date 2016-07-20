@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &assignPIP);
+
+# Example  qassignpip '29448' '1378' 'DEMO LTD' '1' 'debian' '162.222.32.228' '162.222.32.229' '1'
+################
+##Main
+##
+#################
+
+my $cust_id=shift;
+my $server_id=shift;
+my $cust_name=shift;
+my $os_type=shift;
+my $os_name=shift;
+my $wan_primary_ip=shift;
+my $wan_sec_ip_list=shift;
+my $noaddip=shift;
+
+if (assignPIP($cust_id,$server_id,$cust_name,$os_type,$os_name,$wan_primary_ip,$wan_sec_ip_list,$noaddip))
+ {
+        write_log("Additional IP's to $cust_id-$server_id of customer $cust_name assigned");
+	#write_log(" Server Details- \n  Customer Name- $cust_name \n Server ID- $server_id \n Root Password- $admin_password \n Primary Ip- $wan_primary_ip \n VNC Port $vm_host_vnc_port \n )";
+        print success;
+        }
+else
+        {
+        write_log("Error in Installation::");
+        print fail;
+        }

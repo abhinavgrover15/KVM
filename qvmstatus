@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success &fail);
+
+$PATH_TO_STATUS_LOG="/var/log/vmstatusrpc.log";
+
+################
+##Main
+##
+#################
+
+write_status_log("VM Status Script Called.");
+#print fail;
+#exit;
+
+$daCustomerId = shift;
+$vmGuestServerBaseId = shift;
+
+$resp=`virsh domstate $daCustomerId-$vmGuestServerBaseId | awk '{print \$1 \$2}'`;
+write_status_log("VM Status Script Response, VM Server  $daCustomerId-$vmGuestServerBaseId is: $resp");
+print $resp;
+
+################
+###write_status_log function to print
+###
+##################
+
+sub write_status_log {
+  my $msg=$_[0];
+
+  $msg=date_string() . $msg;
+
+  if(open(LOGFILE, ">> $PATH_TO_STATUS_LOG")) {
+    print LOGFILE $msg . "\n";
+    close LOGFILE;
+  }
+        else {
+                print("Couldn't open $PATH_TO_STATUS_LOG!!!");
+        }
+
+        if ($debug)
+        {
+        print $msg."\n";}
+
+}
+

@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &deleteBACKUP);
+
+#SYNTAX
+#/usr/local/sbin/qdeletebackup '<cust_id>' '<server_id>' '<retention_period>' 'backup_id'
+#EXAMPLE
+#/usr/local/sbin/qdeletebackup 'mayar' 'vm01' '5' 'bkp001'
+
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+my $retention_period=shift;
+my $backup_id=shift;
+
+
+if (deleteBACKUP($cust_id,$server_id,$retention_period,$backup_id))
+ {
+	write_log("BACKUP HAS BEEN DELETED FOR HOST $server_id, CUSTOMER NAME $cust_id FOR $retention_period DAYS AND BACKUP ID - $backup_id \n");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE DELETING BACKUP FOR HOST $server_id, CUSTOMER NAME $cust_id FOR $retention_period DAYS AND BACKUP ID - $backup_id \n");
+        print fail;
+        }

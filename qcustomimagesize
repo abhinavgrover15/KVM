@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success &fail);
+
+$PATH_TO_STATUS_LOG="/var/log/kvmrpc.log";
+
+################
+##Main
+##
+#################
+
+write_log("VM Custom image size Script Called");
+
+my $cust_id=shift;
+my $server_id=shift;
+my $custom_img_id=shift;
+my $custom_img_location=shift;
+
+
+$resp=`du /mnt$custom_img_location$custom_img_id.qcow2 | cut -d' ' -f1`;
+
+print $resp;
+

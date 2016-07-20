@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success  &fail &restoreSTIMAGE);
+
+#SYNTAX
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+my $std_img_location=shift;
+my $os_type=shift;
+my $os_name=shift;
+my $os_version=shift;
+my $os_arch=shift;
+my $wan_primary_ip=shift;
+my $wan_sec_ip_list=shift;
+
+if (restoreSTIMAGE($cust_id,$server_id,$std_img_location,$os_type,$os_name,$os_version,$os_arch,$wan_primary_ip,$wan_sec_ip_list))
+ {
+	write_log("CUSTOM IMAGE $custom_img_id  HAS BEEN RESTORED FOR $server_id, CUSTOMER NAME $cust_id FROM PATH LOCATION $custom_img_location \n");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE RESTORING CUSTOM IMAGE $custom_img_id FOR $server_id, CUSTOMER NAME \n");
+        print fail;
+        }

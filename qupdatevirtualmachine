@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM1 qw(&write_log &success  &fail &updateVM);
+
+#SYNTAX
+#/usr/local/sbin/qupdatevirtualmachine  '<cust_id>' '<server_id>' 'ram' 'vcpu' 'storage_old' 'storage_new' '<os_type>'
+#EXAMPLE
+#/usr/local/sbin/qupdatevirtualmachine  mayar vmtest01 2048 2 20G 25G 'linux'
+
+
+
+################
+##Main
+##
+#################
+
+
+my $cust_id=shift;
+my $server_id=shift;
+my $ram=shift;
+my $vcpu=shift;
+my $storage_old=shift;
+my $storage_new=shift;
+my $os_type=shift;
+
+write_log("Updation of $cust_id-$server_id server of customer $cust_name is started.");
+if (updateVM($cust_id,$server_id,$ram,$vcpu,$storage_old,$storage_new,$os_type))
+ {
+	write_log("SERVER : $cust_id-$server_id HAS BEEN UPDATED FOR CUSTOMER : $cust_id");
+        print success;
+        }
+else
+        {
+	write_log("ERROR WHILE UPDATING SERVER : $cust_id-$server_id FOR CUSTOMER : $cust_id");
+        print fail;
+        }

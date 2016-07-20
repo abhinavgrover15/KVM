@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+use lib "/usr/local/sbin";
+use KVM qw(&write_log &success &fail);
+
+$PATH_TO_STATUS_LOG="/var/log/kvmrpc.log";
+
+################
+##Main
+##
+#################
+#Size of backup and custom image (customerId,serverId,location,sizeof-1-custom image,2-backup)
+write_log("VM Size Script Called.");
+
+my $cust_id=shift;
+my $server_id=shift;
+my $image_location=shift;
+my $backup_id=shift;
+my $img_type=shift;
+my $vmbkupsize=0;
+
+	if (-e "/etc/libvirt/qemu/$cust_id-$server_id.xml")
+	{
+                
+           if($img_type == 2)
+	   {            
+	     $vmbkupsize=`du -sh --block-size=M /$image_location/os_backup_images/$cust_id/$cust_id-$server_id/$cust_id-$server_id-$backup_id.qcow2 | cut -d'M' -f1`;
+             print $vmbkupsize;
+           }
+	   else
+          {
+	    $vmbkupsize=`du -sh --block-size=M /$image_location/os_custom_images/$cust_id/$cust_id-$server_id/$cust_id-$server_id-$backup_id.qcow2 | cut -d'M' -f1`;
+	    print $vmbkupsize;
+          }
+
+	}
+        else
+        {
+         write_log("MACHINE NOT EXIST : $cust_id-$server_id FOR CUSTOMER : $cust_id\n");
+         print 0;
+        }
+
+
+
