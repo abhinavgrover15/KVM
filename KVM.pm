@@ -429,7 +429,7 @@ sub Append {
         my $vnc_password     = shift;
         my $ram              = $ram * 1024;
         my $dm               = "G";
-        my $host_ip_address  = "104.152.176.194";
+        my $host_ip_address  = "1.1.1.1";
 	my $resized	     = 0;
 ###########################################################################################
 ######## Check whether same hostname machine is not created previously#######################
